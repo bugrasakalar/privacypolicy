@@ -1,13 +1,298 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>Privacy Policy</title></head>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dua Halkası – Günlük Zikir</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark: #1a3a2a;
+      --green: #2d6a4f;
+      --green-mid: #40916c;
+      --green-light: #74c69d;
+      --gold: #c9a84c;
+      --cream: #faf8f3;
+      --text: #1a2e22;
+      --muted: #6b7c73;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 10% 10%, rgba(45,106,79,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 90% 90%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%232d6a4f' stroke-width='0.4' stroke-opacity='0.12'%3E%3Cpolygon points='40,4 76,22 76,58 40,76 4,58 4,22'/%3E%3Cpolygon points='40,16 64,28 64,52 40,64 16,52 16,28'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 72px 24px 32px;
+    }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: clamp(26px, 6vw, 50px);
+      color: var(--green);
+      letter-spacing: 2px;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.1s;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 22px auto;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.3s;
+    }
+    .ornament-line { height: 1px; width: 60px; background: linear-gradient(to right, transparent, var(--gold)); }
+    .ornament-line.r { background: linear-gradient(to left, transparent, var(--gold)); }
+    .ornament-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); border-radius: 1px; }
+
+    h1.app-name {
+      font-size: clamp(24px, 5vw, 42px);
+      font-weight: 500;
+      color: var(--green-dark);
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.4s;
+    }
+    .app-tagline {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 8px;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.5s;
+    }
+
+    .tasbih-wrap {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      margin: 40px 0 48px;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.6s;
+    }
+    .tasbih-wrap svg { animation: rotateSlow 40s linear infinite; }
+
+    .desc-wrap {
+      position: relative;
+      z-index: 10;
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 0 28px;
+      text-align: center;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.7s;
+    }
+    .desc-wrap p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .features {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      max-width: 680px;
+      margin: 52px auto 0;
+      padding: 0 24px;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 0.85s;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(45,106,79,0.12);
+      border-radius: 16px;
+      padding: 26px 18px;
+      text-align: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(45,106,79,0.1);
+    }
+    .feature-icon {
+      font-family: 'Amiri', serif;
+      font-size: 26px;
+      color: var(--green);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .feature-title { font-size: 15px; font-weight: 500; color: var(--green-dark); margin-bottom: 6px; }
+    .feature-text { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; }
+
+    .cta-wrap {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 52px 24px 0;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 1s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--green); color: #fff; }
+    .btn-secondary { background: transparent; color: var(--green); border: 1.5px solid rgba(45,106,79,0.4); }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 64px 24px 40px;
+      opacity: 0;
+      animation: riseIn 1s cubic-bezier(.22,1,.36,1) forwards 1.1s;
+    }
+    .footer-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .fo-line { height: 1px; width: 50px; background: linear-gradient(to right, transparent, rgba(45,106,79,0.25)); }
+    .fo-line.r { background: linear-gradient(to left, transparent, rgba(45,106,79,0.25)); }
+    .fo-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(45,106,79,0.25); }
+    footer p { font-size: 13px; font-weight: 300; color: var(--muted); }
+    footer a { color: var(--green); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+  </style>
+</head>
 <body>
-  <h1>Privacy Policy</h1>
-  <p>Last updated: March 2026</p>
 
-  <p>This app does not collect, store, or share any personal data.</p>
+  <header>
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line r"></div>
+    </div>
+    <h1 class="app-name">Dua Halkası</h1>
+    <p class="app-tagline">Günlük Zikir &amp; Tesbihat</p>
+  </header>
 
-  <h2>Contact</h2>
-  <p>If you have any questions, contact us at: practicalsolutionssoftware@gmail.com</p>
+  <div class="tasbih-wrap">
+    <svg width="170" height="170" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="90"  cy="18"  r="9" fill="#2d6a4f" opacity="0.9"/>
+      <circle cx="127" cy="27"  r="8" fill="#40916c" opacity="0.85"/>
+      <circle cx="155" cy="55"  r="8" fill="#2d6a4f" opacity="0.8"/>
+      <circle cx="163" cy="90"  r="9" fill="#40916c" opacity="0.9"/>
+      <circle cx="155" cy="125" r="8" fill="#2d6a4f" opacity="0.85"/>
+      <circle cx="127" cy="153" r="8" fill="#40916c" opacity="0.8"/>
+      <circle cx="90"  cy="162" r="9" fill="#2d6a4f" opacity="0.9"/>
+      <circle cx="53"  cy="153" r="8" fill="#40916c" opacity="0.85"/>
+      <circle cx="25"  cy="125" r="8" fill="#2d6a4f" opacity="0.8"/>
+      <circle cx="17"  cy="90"  r="9" fill="#40916c" opacity="0.9"/>
+      <circle cx="25"  cy="55"  r="8" fill="#2d6a4f" opacity="0.85"/>
+      <circle cx="53"  cy="27"  r="8" fill="#40916c" opacity="0.8"/>
+      <circle cx="90" cy="90" r="65" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4 6" fill="none" opacity="0.45"/>
+      <circle cx="90" cy="90" r="28" fill="#2d6a4f" opacity="0.07"/>
+      <circle cx="90" cy="90" r="22" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.45"/>
+      <text x="90" y="97" text-anchor="middle" font-family="'Amiri', serif" font-size="20" fill="#2d6a4f" opacity="0.9">الله</text>
+    </svg>
+  </div>
+
+  <div class="desc-wrap">
+    <p>Her gün zikrinizi kolayca takip edin. Tesbihat, esmaül hüsna ve özel dua listelerinizi tek bir uygulamada toplayın.</p>
+  </div>
+
+  <div class="features">
+    <div class="feature-card">
+      <span class="feature-icon">سُبْ</span>
+      <div class="feature-title">Günlük Tesbihat</div>
+      <p class="feature-text">Subhanallah, Elhamdülillah, Allahuekber sayımlarını otomatik kaydedin.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">٩٩</span>
+      <div class="feature-title">Esmaül Hüsna</div>
+      <p class="feature-text">Allah'ın 99 ismini günlük zikir listenize ekleyin.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">دُعَ</span>
+      <div class="feature-title">Kişisel Dualar</div>
+      <p class="feature-text">Kendinize özel dua listesi oluşturun, hatırlatıcı kurun.</p>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <a href="#" class="btn btn-primary">▶ App Store'da İndir</a>
+    <a href="#" class="btn btn-secondary">▶ Google Play'de İndir</a>
+  </div>
+
+  <footer>
+    <div class="footer-ornament">
+      <div class="fo-line"></div>
+      <div class="fo-dot"></div>
+      <div class="fo-line r"></div>
+    </div>
+    <p>© 2026 Dua Halkası &nbsp;·&nbsp; <a href="privacy-policy.html">Gizlilik Politikası</a> &nbsp;·&nbsp; <a href="delete-account.html">Hesap Sil</a></p>
+  </footer>
+
 </body>
 </html>
